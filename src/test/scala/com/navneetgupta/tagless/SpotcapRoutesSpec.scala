@@ -11,7 +11,6 @@ import org.http4s.{EntityDecoder, EntityEncoder, Method, Status}
 
 class SpotcapRoutesSpec extends HttpSpec {
   import SpotcapRoutesSpec._
-  import SpotcapRoutesSpec.routes._
 
   implicit val valueEncoder: Encoder[Value] = deriveEncoder
   implicit val valueDecoder: Decoder[Value] = deriveDecoder
