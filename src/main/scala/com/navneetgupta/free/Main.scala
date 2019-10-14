@@ -3,6 +3,7 @@ package com.navneetgupta.free
 import cats.effect._
 import cats.implicits._
 import org.http4s.server._
+import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
 
 object Main extends IOApp {

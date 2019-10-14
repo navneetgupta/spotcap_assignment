@@ -1,6 +1,7 @@
 package com.navneetgupta.free
 
 import cats.effect.Effect
+import com.navneetgupta.common.Models.CashflowAmount
 import com.navneetgupta.free.FreeStyleProgram.{CalculatorAlg, FindRoot}
 
 import scala.annotation.tailrec
