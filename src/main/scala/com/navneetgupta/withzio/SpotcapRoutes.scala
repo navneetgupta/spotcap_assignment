@@ -8,8 +8,9 @@ import org.http4s.dsl.Http4sDsl
 import zio.interop.catz._
 import com.navneetgupta.common.Models._
 import io.circe.generic.semiauto._
+import zio.blocking.Blocking
 
-final case class SpotcapRoutes[R <: Calculator]() {
+final case class SpotcapRoutes[R <: Calculator with Blocking]() {
 
   type SpotcapTask[A] = RIO[R, A]
   implicit val valueEncoder: Encoder[Value] = deriveEncoder
@@ -25,7 +26,7 @@ final case class SpotcapRoutes[R <: Calculator]() {
   implicit def circeJsonEncoder[A](implicit encoder: Encoder[A]): EntityEncoder[SpotcapTask, A] =
     jsonEncoderOf[SpotcapTask, A]
 
-  def findRoot(cashflows: List[CashflowAmount], guess: Double): ZIO[Calculator, Nothing, Either[String, Double]] =
+  def findRoot(cashflows: List[CashflowAmount], guess: Double): ZIO[Blocking with Calculator, Throwable, Either[String, Double]] =
     ZIO.accessM(_.rootCalculator.findRoot(cashflows, guess))
 
   def calculatePower(base: Principal, exponent: Principal): ZIO[SimplePowerCalculator, Nothing, Principal] =

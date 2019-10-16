@@ -2,20 +2,22 @@ package com.navneetgupta.withzio
 
 import com.navneetgupta.common.Models._
 import zio.ZIO
+import zio.blocking._
 
 import scala.annotation.tailrec
 
 trait CalculatorLive extends Calculator {
 //  val simplePowerCalculator: SimplePowerCalculator.PowerCalculator[Any]
 
-  override final val rootCalculator: Calculator.CalculatorService[Any] =  new Calculator.CalculatorService[Any] {
+  override final val rootCalculator: Calculator.CalculatorService[Blocking] =  new Calculator.CalculatorService[Blocking] {
     private val ACCURACY = 1E-5
     private val MAX_ITTERATION = 25
-    override def findRoot(cashflows: List[CashflowAmount], guess: Double): ZIO[Any, Nothing, Either[String, Double]] =
-      for {
-        fiber <- ZIO.effectTotal(newtonsMethod(guess, cashflows,0)).fork
-        resp <- fiber.join
-      } yield resp
+    override def findRoot(cashflows: List[CashflowAmount], guess: Double): ZIO[Blocking, Throwable, Either[String, Double]] =
+//      for {
+//        fiber <- ().fork
+//        resp <- fiber.join
+//      } yield resp
+      effectBlocking(newtonsMethod(guess, cashflows,0))
 
     // Initial guess can be improved TODO: Investigate optimal initial guess
     @tailrec

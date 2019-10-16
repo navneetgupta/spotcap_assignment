@@ -2,14 +2,15 @@ package com.navneetgupta.withzio
 
 import com.navneetgupta.common.Models._
 import zio.ZIO
+import zio.blocking.Blocking
 
 trait Calculator {
-  val rootCalculator : Calculator.CalculatorService[Any]
+  val rootCalculator : Calculator.CalculatorService[Blocking]
 }
 
 object Calculator {
   trait CalculatorService[R] {
-    def findRoot(cashFlows:List[CashflowAmount], guess: Double): ZIO[R, Nothing, Either[String, Double]]
+    def findRoot(cashFlows:List[CashflowAmount], guess: Double): ZIO[R, Throwable, Either[String, Double]]
   }
 }
 
