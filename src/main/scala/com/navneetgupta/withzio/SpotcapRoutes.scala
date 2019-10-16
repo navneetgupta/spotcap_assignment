@@ -39,6 +39,7 @@ final case class SpotcapRoutes[R <: Calculator]() {
       case GET -> Root => Ok("Spotcap!!!")
       case req @ POST -> Root =>
         req.decode[InputForm] { inputForm =>
+          // Initial guess can be improved TODO: Investigate optimal initial guess
           findRoot(inputForm.asCalculatorModel.cashflows, 0.01).flatMap(x => x.fold(msg => Ok(ResponseModel(msg)), a => Ok(ResponseModel(a))))
         }
     }

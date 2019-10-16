@@ -108,3 +108,8 @@ curl -X POST \
 ```
 sbt test
 ```
+
+
+## Further Improvement:
+* Optimize initial guess.
+* Modify to include installment different interval 

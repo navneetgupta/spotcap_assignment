@@ -26,6 +26,7 @@ class SpotcapRoutes[F[_]:Effect] extends Http4sDsl[F]{
     case GET -> Root => Ok("Spotcap!!!")
     case req @ POST -> Root =>
       req.decode[InputForm] { inputForm =>
+        // Initial guess can be improved TODO: Investigate optimal initial guess
         calculator.findRoot(inputForm.asCalculatorModel.cashflows, 0.00).flatMap(x => x.fold(msg => Ok(ResponseModel(msg)), a => Ok(ResponseModel(a))))
       }
   }

@@ -17,7 +17,7 @@ trait CalculatorLive extends Calculator {
         resp <- fiber.join
       } yield resp
 
-
+    // Initial guess can be improved TODO: Investigate optimal initial guess
     @tailrec
     def newtonsMethod(rateToTry: Double, cashflows: List[CashflowAmount], iterationCount: Int): Either[String,Double] = {
       if(iterationCount > MAX_ITTERATION)

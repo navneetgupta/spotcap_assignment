@@ -14,7 +14,7 @@ class CalculatorInterpretor[F[_]: Applicative] extends Calculator[F] {
   override def findRoot(cashFlows: List[CashflowAmount], guess: Double): F[Either[String, Double]] =
     (newtonsMethod(guess, cashFlows, 0)).pure[F]
 
-
+  // Initial guess can be improved TODO: Investigate optimal initial guess
   @tailrec
   private def newtonsMethod(rateToTry: Double, cashflows: List[CashflowAmount], iterationCount: Int): Either[String,Double] = {
     if(iterationCount > MAX_ITTERATION)
