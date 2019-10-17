@@ -7,11 +7,8 @@ import zio.console._
 import org.http4s.implicits._
 import org.http4s.{Status, _}
 import zio.interop.catz._
-
-import com.navneetgupta.withzio.{
-  Calculator => ZCalculator,
-  CalculatorLive => ZCalculatorLive
-}
+import com.navneetgupta.withzio.{Calculator => ZCalculator, CalculatorLive => ZCalculatorLive}
+import zio.blocking.Blocking
 
 class SpotcapRoutesSpec extends HttpSpec {
   import SpotcapRoutesSpec._
@@ -61,18 +58,19 @@ class SpotcapRoutesSpec extends HttpSpec {
 
 object SpotcapRoutesSpec extends DefaultRuntime {
 
-  val spotcapRoutes = SpotcapRoutes[ZCalculator]()
+  val spotcapRoutes = SpotcapRoutes[ZCalculator with Blocking]()
 
   val mkEnv =
     for {
       _ <- putStrLn("Starting testing")
       calc = ZCalculatorLive.rootCalculator
-      env = new ZCalculator {
-        override val rootCalculator: ZCalculator.CalculatorService[Any] = calc
+      env = new ZCalculator with Blocking {
+        override val rootCalculator: ZCalculator.CalculatorService[Blocking] = calc
+        override val blocking: Blocking.Service[Any] = Blocking.Live.blocking
       }
     } yield env
 
-  def runWithEnv[E, A](task: ZIO[ZCalculator, E, A]): A =
+  def runWithEnv[E, A](task: ZIO[ZCalculator with Blocking, E, A]): A =
     unsafeRun[E, A](mkEnv.flatMap(env => task.provide(env)))
 
 }
