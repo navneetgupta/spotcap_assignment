@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
         "org.typelevel" 		%% "cats-core" 							% "2.0.0-RC1",
         "org.typelevel" 		%% "cats-free" 							% "2.0.0-RC1",
         "org.typelevel" 		%% "cats-effect" 							% "2.0.0-RC2",
-        "dev.zio"						%% "zio" 										% "1.0.0-RC12-1",
+        "dev.zio"						%% "zio" 										% "1.0.0-RC17",
         "org.http4s"        %% "http4s-blaze-server" 		% Http4sVersion,
         "org.http4s"        %% "http4s-circe"        		% Http4sVersion,
         "org.http4s"        %% "http4s-dsl"          		% Http4sVersion,
@@ -22,7 +22,7 @@ lazy val root = (project in file("."))
         "io.circe"          %% "circe-generic"       		% CirceVersion,
         "io.circe"          %% "circe-parser"       		% CirceVersion,
         "io.circe" 					%% "circe-literal" 					% CirceVersion,
-        "dev.zio"        		%% "zio-interop-cats"    		% "2.0.0.0-RC3",
+        "dev.zio"        		%% "zio-interop-cats"    		% "2.0.0.0-RC8",
         compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full),
       )
     }
